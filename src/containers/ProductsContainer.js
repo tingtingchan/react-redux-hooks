@@ -1,23 +1,22 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
 
-import { ADD_TO_CART, RECEIVE_PRODUCTS } from "../constants/ActionTypes";
+import {
+  ADD_TO_CART,
+  RECEIVE_PRODUCTS,
+  FILTER_BY_SIZE
+} from "../constants/ActionTypes";
 
-// import ProductList from "../components/ProductList";
+import { FilterBySize } from "../components/FilterBySize";
 // import ProductItem from "../components/ProductItem";
+
+import { getSizeRangeList, getRenderedProducts } from "../selectors";
 
 const url = "http://localhost:8000/products";
 
 export function ProductsContainer() {
-  const byId = useSelector(state => state.productsReducer.byId);
-
-  const visibleIdsSelector = state => state.productsReducer.visibleIds;
-  const getVisibleProducts = createSelector(visibleIdsSelector, visibleIds =>
-    visibleIds.map(id => byId[id])
-  );
-
-  const visibleProducts = useSelector(getVisibleProducts);
+  const sizeRangeList = useSelector(getSizeRangeList);
+  const renderedProducts = useSelector(getRenderedProducts);
 
   const dispatch = useDispatch();
 
@@ -39,7 +38,14 @@ export function ProductsContainer() {
     <div>
       <h2>Product List</h2>
       <hr />
-      {visibleProducts.map(product => (
+      <FilterBySize
+        sizeRange={sizeRangeList}
+        handleSizeChange={e =>
+          dispatch({ type: FILTER_BY_SIZE, payload: e.target.value })
+        }
+      />
+      <hr />
+      {renderedProducts.map(product => (
         <div key={product.id}>
           <div>
             <a href={`#${product.id}`}>
@@ -48,6 +54,7 @@ export function ProductsContainer() {
             <div>
               <p>{product.title}</p>
               <b>{product.price}</b> | <b>{product.inventory} left</b>
+              <p>{product.availableSizes.join(", ")}</p>
             </div>
             <button
               onClick={() => dispatch({ type: ADD_TO_CART, payload: product })}
