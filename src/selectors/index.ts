@@ -1,9 +1,16 @@
 import { createSelector } from "reselect";
 
-const productsSelector = state => state.productsReducer.products;
-const byIdSelector = state => state.productsReducer.byId;
-const visibleIdsSelector = state => state.productsReducer.visibleIds;
-const filteredSizeSelector = state => state.productsReducer.filteredSize;
+import { ProductsReducer } from "./../reducers/products";
+
+type State = {
+  productsReducer: ProductsReducer;
+};
+
+const productsSelector = (state: State) => state.productsReducer.products;
+const byIdSelector = (state: State) => state.productsReducer.byId;
+const visibleIdsSelector = (state: State) => state.productsReducer.visibleIds;
+const filteredSizeSelector = (state: State) =>
+  state.productsReducer.filteredSize;
 
 export const getSizeRangeList = createSelector(productsSelector, products => {
   return products.reduce((acc, currProduct) => {

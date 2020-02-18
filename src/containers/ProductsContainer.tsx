@@ -11,12 +11,13 @@ import { FilterBySize } from "../components/FilterBySize";
 // import ProductItem from "../components/ProductItem";
 
 import { getSizeRangeList, getRenderedProducts } from "../selectors";
+import { Product } from "../reducers/products";
 
 const url = "http://localhost:8000/products";
 
-export function ProductsContainer() {
-  const sizeRangeList = useSelector(getSizeRangeList);
-  const renderedProducts = useSelector(getRenderedProducts);
+export const ProductsContainer: React.FC = () => {
+  const sizeRangeList: Array<string> = useSelector(getSizeRangeList);
+  const renderedProducts: Array<Product> = useSelector(getRenderedProducts);
 
   const dispatch = useDispatch();
 
@@ -66,4 +67,4 @@ export function ProductsContainer() {
       ))}
     </div>
   );
-}
+};
