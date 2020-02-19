@@ -45,7 +45,7 @@ const byId = (state: ProductById = {}, action: Actions) => {
     case RECEIVE_PRODUCTS:
       return {
         ...state,
-        ...action.products.reduce((obj, product) => {
+        ...action.products.reduce<ProductById>((obj, product) => {
           obj[product.id] = product;
           return obj;
         }, {})

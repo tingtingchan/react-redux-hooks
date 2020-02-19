@@ -31,7 +31,7 @@ export const ProductsContainer: React.FC = () => {
       })
       .then(data => {
         // setProducts(data);
-        dispatch({ type: RECEIVE_PRODUCTS, payload: data });
+        dispatch({ type: RECEIVE_PRODUCTS, products: data });
       });
   }, [dispatch]);
 
@@ -42,7 +42,7 @@ export const ProductsContainer: React.FC = () => {
       <FilterBySize
         sizeRange={sizeRangeList}
         handleSizeChange={e =>
-          dispatch({ type: FILTER_BY_SIZE, payload: e.target.value })
+          dispatch({ type: FILTER_BY_SIZE, size: e.target.value })
         }
       />
       <hr />
@@ -58,7 +58,7 @@ export const ProductsContainer: React.FC = () => {
               <p>{product.availableSizes.join(", ")}</p>
             </div>
             <button
-              onClick={() => dispatch({ type: ADD_TO_CART, payload: product })}
+              onClick={() => dispatch({ type: ADD_TO_CART, products: product })}
             >
               {!product.inventory ? "Sold Out" : "Add to cart"}
             </button>

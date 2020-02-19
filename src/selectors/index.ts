@@ -13,7 +13,7 @@ const filteredSizeSelector = (state: State) =>
   state.productsReducer.filteredSize;
 
 export const getSizeRangeList = createSelector(productsSelector, products => {
-  return products.reduce((acc, currProduct) => {
+  return products.reduce<string[]>((acc, currProduct) => {
     return [...new Set([...acc, ...currProduct.availableSizes])];
   }, []);
 });
