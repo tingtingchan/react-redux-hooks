@@ -13,9 +13,12 @@ const filteredSizeSelector = (state: State) =>
   state.productsReducer.filteredSize;
 
 export const getSizeRangeList = createSelector(productsSelector, products => {
-  return products.reduce<string[]>((acc, currProduct) => {
-    return [...new Set([...acc, ...currProduct.availableSizes])];
-  }, []);
+  return products.reduce<string[]>(
+    (acc, currProduct) => {
+      return [...new Set([...acc, ...currProduct.availableSizes])];
+    },
+    ["All"]
+  );
 });
 
 export const getVisibleProducts = createSelector(
@@ -36,6 +39,11 @@ export const getFilteredVisibleProducts = createSelector(
 
 export const getRenderedProducts = createSelector(
   [filteredSizeSelector, getVisibleProducts, getFilteredVisibleProducts],
-  (filteredSize, visibleProducts, filteredVisibleProducts) =>
-    filteredSize ? filteredVisibleProducts : visibleProducts
+  (filteredSize, visibleProducts, filteredVisibleProducts) => {
+    if (filteredSize === "All") {
+      return visibleProducts;
+    } else {
+      return filteredVisibleProducts;
+    }
+  }
 );

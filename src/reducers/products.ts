@@ -67,7 +67,7 @@ const visibleIds = (state: Array<number> = [], action: Actions) => {
   }
 };
 
-const filteredSize = (state: string = "", action: Actions) => {
+const filteredSize = (state: string = "All", action: Actions) => {
   switch (action.type) {
     case FILTER_BY_SIZE:
       return action.size;
