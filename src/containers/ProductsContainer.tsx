@@ -39,6 +39,7 @@ export const ProductsContainer: React.FC = () => {
     <div>
       <h2>Product List</h2>
       <hr />
+      <p>{renderedProducts.length} products found.</p>
       <FilterBySize
         sizeRange={sizeRangeList}
         handleSizeChange={e =>
