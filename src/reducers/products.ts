@@ -1,17 +1,20 @@
 import { combineReducers } from "redux";
 
-import { RECEIVE_PRODUCTS, FILTER_BY_SIZE } from "../constants/ActionTypes";
+import { RECEIVE_PRODUCTS, FILTER_BY_SIZE, ADD_TO_CART } from "../constants/ActionTypes";
 
 type Actions =
   | { type: "RECEIVE_PRODUCTS"; products: Array<Product> }
-  | { type: "FILTER_BY_SIZE"; size: string };
+  | { type: "FILTER_BY_SIZE"; size: string }
+  | { type: "ADD_TO_CART"; addedProductId: number };
 
 export type ProductsReducer = {
-  products: Product[];
+  products: Products;
   byId: ProductById;
   visibleIds: number[];
   filteredSize: string;
 };
+
+type Products = Product[]
 
 export interface Product {
   id: number;
@@ -28,17 +31,22 @@ export interface ProductById {
   [key: number]: Product;
 }
 
-// type State = Product[]
-
-const products = (state: Product[] = [], action: Actions) => {
+const products = (state: Products = [], action: Actions): Product[] => {
   switch (action.type) {
     case RECEIVE_PRODUCTS:
       return action.products;
-
     default:
       return state;
   }
 };
+
+const decrementInventory = (state: Product): Product => {
+  return {
+    ...state,
+    inventory: state.inventory - 1
+  }
+}
+
 
 const byId = (state: ProductById = {}, action: Actions) => {
   switch (action.type) {
@@ -51,8 +59,14 @@ const byId = (state: ProductById = {}, action: Actions) => {
         }, {})
       };
 
+    case ADD_TO_CART:
+      const { addedProductId } = action
+      return {
+        ...state,
+        [addedProductId]: decrementInventory(state[addedProductId])
+      };
+
     default:
-      // TODO: based on products to key off by id
       return state;
   }
 };

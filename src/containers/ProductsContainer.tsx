@@ -59,7 +59,9 @@ export const ProductsContainer: React.FC = () => {
               <p>{product.availableSizes.join(", ")}</p>
             </div>
             <button
-              onClick={() => dispatch({ type: ADD_TO_CART, products: product })}
+              onClick={() =>
+                dispatch({ type: ADD_TO_CART, addedProductId: product.id })
+              }
             >
               {!product.inventory ? "Sold Out" : "Add to cart"}
             </button>
