@@ -3,21 +3,16 @@ import { useSelector } from "react-redux";
 
 import { getCartItems } from "../selectors/cart";
 import { Product } from "../reducers/products";
+import { CartItemList } from "../components/CartItemList";
 
 export const CartContainer: React.FC = () => {
-  const cartitems: Array<Product> = useSelector(getCartItems);
+  const cartItems: Array<Product> = useSelector(getCartItems);
 
-  console.log(cartitems);
   return (
     <div>
       <h2>Cart List</h2>
       <hr />
-      {cartitems.map(item => (
-        <>
-          <p>{item.description}</p>
-          <input placeholder={item.inventory.toString()}></input>
-        </>
-      ))}
+      <CartItemList cartItems={cartItems} />
     </div>
   );
 };
