@@ -10,7 +10,7 @@ import {
 import { FilterBySize } from "../components/FilterBySize";
 // import ProductItem from "../components/ProductItem";
 
-import { getSizeRangeList, getRenderedProducts } from "../selectors";
+import { getSizeRangeList, getRenderedProducts } from "../selectors/products";
 import { Product } from "../reducers/products";
 
 const url = "http://localhost:8000/products";

@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { ProductsReducer } from "./../reducers/products";
+import { ProductsReducer } from "../reducers/products";
 
 type State = {
   productsReducer: ProductsReducer;
@@ -47,3 +47,4 @@ export const getRenderedProducts = createSelector(
     }
   }
 );
+
