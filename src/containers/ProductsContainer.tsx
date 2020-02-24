@@ -8,10 +8,10 @@ import {
 } from "../constants/ActionTypes";
 
 import { FilterBySize } from "../components/FilterBySize";
-// import ProductItem from "../components/ProductItem";
-
+import { ProductsList } from "../components/ProductsList";
 import { getSizeRangeList, getRenderedProducts } from "../selectors/products";
 import { Product } from "../reducers/products";
+import { ProductItem } from "../components/ProductItem";
 
 const url = "http://localhost:8000/products";
 
@@ -47,27 +47,20 @@ export const ProductsContainer: React.FC = () => {
         }
       />
       <hr />
-      {renderedProducts.map(product => (
-        <div key={product.id}>
-          <div>
-            <a href={`#${product.id}`}>
-              <img src={`products/${product.sku}_2.jpg`} alt={product.title} />
-            </a>
-            <div>
-              <p>{product.title}</p>
-              <b>{product.price}</b> | <b>{product.inventory} left</b>
-              <p>{product.availableSizes.join(", ")}</p>
-            </div>
-            <button
-              onClick={() =>
-                dispatch({ type: ADD_TO_CART, addedProductId: product.id })
-              }
-            >
-              {!product.inventory ? "Sold Out" : "Add to cart"}
-            </button>
-          </div>
-        </div>
-      ))}
+      <ProductsList>
+        {renderedProducts.map(product => (
+          <ProductItem
+            key={product.id}
+            product={product}
+            onAddToCartClicked={() =>
+              dispatch({
+                type: ADD_TO_CART,
+                addedProductId: product.id
+              })
+            }
+          />
+        ))}
+      </ProductsList>
     </div>
   );
 };

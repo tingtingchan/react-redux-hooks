@@ -21,7 +21,11 @@ export const FilterBySize: React.FC<Props> = ({
           onChange={handleSizeChange}
         >
           {sizeRange.map(size => {
-            return <option value={size}>{size}</option>;
+            return (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            );
           })}
         </select>
       </label>
